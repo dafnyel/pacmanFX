@@ -159,11 +159,10 @@ public class GameManager {
      * @param root
      */
     public void generateGhosts(Group root) {
-        this.ghosts.add(new Ghost(1.5 * BarObstacle.THICKNESS, 1.5 * BarObstacle.THICKNESS, Color.DEEPPINK, maze));
-
-//        this.ghosts.add(new Ghost(50, 80, Color.DEEPPINK));
-//        this.ghosts.add(new Ghost(50, 80, Color.DEEPPINK));
-//        this.ghosts.add(new Ghost(50, 80, Color.DEEPPINK));
+        this.ghosts.add(new Ghost(18.5 * BarObstacle.THICKNESS, 12.5 * BarObstacle.THICKNESS, Color.DEEPPINK, maze));
+        this.ghosts.add(new Ghost(22.5 * BarObstacle.THICKNESS, 12.5 * BarObstacle.THICKNESS, Color.GREENYELLOW, maze));
+        this.ghosts.add(new Ghost(28.5 * BarObstacle.THICKNESS, 12.5 * BarObstacle.THICKNESS, Color.BLACK, maze));
+        this.ghosts.add(new Ghost(28.5 * BarObstacle.THICKNESS, 9.5 * BarObstacle.THICKNESS, Color.SPRINGGREEN, maze));
     }
 
     /**
@@ -171,7 +170,9 @@ public class GameManager {
      * @param event
      */
     public void movePacman(KeyEvent event) {
-        this.ghosts.iterator().next().getAnimation().start();
+        for (Ghost ghost : this.ghosts) {
+            ghost.run();
+        }
         switch(event.getCode()) {
             case RIGHT:
                 this.rightPacmanAnimation.start();

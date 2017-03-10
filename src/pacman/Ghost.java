@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.Random;
 
 
-public class Ghost extends Rectangle {
+public class Ghost extends Rectangle implements Runnable {
 
     String direction;
     Maze maze;
@@ -195,5 +195,10 @@ public class Ghost extends Rectangle {
                 }
             }
         };
+    }
+
+    @Override
+    public void run() {
+        this.animation.start();
     }
 }
