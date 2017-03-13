@@ -34,6 +34,7 @@ public class GameManager {
     private int score;
     private Score scoreBoard;
     private boolean gameEnded;
+    private int cookiesEaten;
 
     /**
      * Constructor
@@ -49,6 +50,8 @@ public class GameManager {
         this.upPacmanAnimation = this.createAnimation("up");
         this.downPacmanAnimation = this.createAnimation("down");
         this.lifes = 3;
+        this.score = 0;
+        this.cookiesEaten = 0;
     }
 
     /**
@@ -106,6 +109,7 @@ public class GameManager {
             this.pacman.setCenterY(2.5 * BarObstacle.THICKNESS);
             this.lifes = 3;
             this.score = 0;
+            this.cookiesEaten = 0;
             gameEnded = false;
         }
     }
@@ -354,6 +358,7 @@ public class GameManager {
                 if ((cookieCenterY >= pacmanTopEdge && cookieCenterY <= pacmanBottomEdge) && (pacmanRightEdge >= cookieLeftEdge && pacmanRightEdge <= cookieRightEdge)) {
                     if (cookie.isVisible()) {
                         this.score += cookie.getValue();
+                        this.cookiesEaten++;
                     }
                     cookie.hide();
                 }
@@ -361,6 +366,7 @@ public class GameManager {
                 if ((cookieCenterY >= pacmanTopEdge && cookieCenterY <= pacmanBottomEdge) && (pacmanLeftEdge >= cookieLeftEdge && pacmanLeftEdge <= cookieRightEdge)) {
                     if (cookie.isVisible()) {
                         this.score += cookie.getValue();
+                        this.cookiesEaten++;
                     }
                     cookie.hide();
                 }
@@ -369,6 +375,7 @@ public class GameManager {
                 if ((cookieCenterX >= pacmanLeftEdge && cookieCenterX <= pacmanRightEdge) && (pacmanBottomEdge >= cookieTopEdge && pacmanBottomEdge <= cookieBottomEdge)) {
                     if (cookie.isVisible()) {
                         this.score += cookie.getValue();
+                        this.cookiesEaten++;
                     }
                     cookie.hide();
                 }
@@ -376,11 +383,15 @@ public class GameManager {
                 if ((cookieCenterX >= pacmanLeftEdge && cookieCenterX <= pacmanRightEdge) && (pacmanTopEdge <= cookieBottomEdge && pacmanTopEdge >= cookieTopEdge)) {
                     if (cookie.isVisible()) {
                         this.score += cookie.getValue();
+                        this.cookiesEaten++;
                     }
                     cookie.hide();
                 }
             }
             this.scoreBoard.score.setText("Score: " + this.score);
+            if (this.cookiesEaten == this.cookieSet.size()) {
+                this.endGame();
+            }
         }
     }
 
