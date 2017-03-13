@@ -6,9 +6,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import pacman.Obstacle.BarObstacle;
 
-/**
- * Created by Fadey on 13/03/2017.
- */
 public class Score {
 
     public Text score;

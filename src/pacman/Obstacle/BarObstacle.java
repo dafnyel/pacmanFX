@@ -25,6 +25,5 @@ public class BarObstacle extends Rectangle {
         }
         this.setFill(Color.CADETBLUE);
         this.setStrokeWidth(3);
-//        this.setStroke(Color.BLUEVIOLET);
     }
 }

@@ -1,20 +1,14 @@
 package pacman;
 
 import javafx.animation.AnimationTimer;
-import javafx.event.Event;
 import javafx.scene.Group;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.util.converter.NumberStringConverter;
 import pacman.Cookie.Cookie;
 import pacman.Obstacle.BarObstacle;
 
-import javax.xml.soap.Text;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
