@@ -1,12 +1,20 @@
 package pacman;
 
 import javafx.animation.AnimationTimer;
+import javafx.event.Event;
 import javafx.scene.Group;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.util.converter.NumberStringConverter;
 import pacman.Cookie.Cookie;
 import pacman.Obstacle.BarObstacle;
 
+import javax.xml.soap.Text;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +31,9 @@ public class GameManager {
     private AnimationTimer downPacmanAnimation;
     private Maze maze;
     private int lifes;
+    private int score;
+    private Score scoreBoard;
+    private boolean gameEnded;
 
     /**
      * Constructor
@@ -54,15 +65,48 @@ public class GameManager {
         this.pacman.setCenterX(2.5 * BarObstacle.THICKNESS);
         this.pacman.setCenterY(2.5 * BarObstacle.THICKNESS);
         lifes--;
+        score -= 10;
+        this.scoreBoard.lifes.setText("Lifes: " + this.lifes);
+        this.scoreBoard.score.setText("Score: " + this.score);
         if (lifes == 0) {
             this.endGame();
         }
     }
 
+    /**
+     * Ends the game
+     */
     private void endGame() {
+        this.gameEnded = true;
         root.getChildren().remove(pacman);
         for (Ghost ghost : ghosts) {
             root.getChildren().remove(ghost);
+        }
+        javafx.scene.text.Text endGame = new javafx.scene.text.Text("Game Over, press ESC to restart");
+        endGame.setX(BarObstacle.THICKNESS * 3);
+        endGame.setY(BarObstacle.THICKNESS * 28);
+        endGame.setFont(Font.font("Arial", 40));
+        endGame.setFill(Color.ROYALBLUE);
+        root.getChildren().remove(this.scoreBoard.score);
+        root.getChildren().remove(this.scoreBoard.lifes);
+        root.getChildren().add(endGame);
+    }
+
+    /**
+     * Restart the game
+     * @param event
+     */
+    public void restartGame(KeyEvent event) {
+        if (event.getCode() == KeyCode.ESCAPE && gameEnded) {
+            root.getChildren().clear();
+            this.cookieSet.clear();
+            this.ghosts.clear();
+            this.drawBoard();
+            this.pacman.setCenterX(2.5 * BarObstacle.THICKNESS);
+            this.pacman.setCenterY(2.5 * BarObstacle.THICKNESS);
+            this.lifes = 3;
+            this.score = 0;
+            gameEnded = false;
         }
     }
 
@@ -183,6 +227,7 @@ public class GameManager {
         root.getChildren().add(this.pacman);
         this.generateGhosts();
         root.getChildren().addAll(this.ghosts);
+        this.scoreBoard = new Score(root);
     }
 
     /**
@@ -307,23 +352,35 @@ public class GameManager {
             if (axis.equals("x")) {
                 // pacman goes right
                 if ((cookieCenterY >= pacmanTopEdge && cookieCenterY <= pacmanBottomEdge) && (pacmanRightEdge >= cookieLeftEdge && pacmanRightEdge <= cookieRightEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                    }
                     cookie.hide();
                 }
                 // pacman goes left
                 if ((cookieCenterY >= pacmanTopEdge && cookieCenterY <= pacmanBottomEdge) && (pacmanLeftEdge >= cookieLeftEdge && pacmanLeftEdge <= cookieRightEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                    }
                     cookie.hide();
                 }
             } else {
                 // pacman goes up
                 if ((cookieCenterX >= pacmanLeftEdge && cookieCenterX <= pacmanRightEdge) && (pacmanBottomEdge >= cookieTopEdge && pacmanBottomEdge <= cookieBottomEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                    }
                     cookie.hide();
                 }
                 // pacman goes down
                 if ((cookieCenterX >= pacmanLeftEdge && cookieCenterX <= pacmanRightEdge) && (pacmanTopEdge <= cookieBottomEdge && pacmanTopEdge >= cookieTopEdge)) {
+                    if (cookie.isVisible()) {
+                        this.score += cookie.getValue();
+                    }
                     cookie.hide();
                 }
             }
-
+            this.scoreBoard.score.setText("Score: " + this.score);
         }
     }
 

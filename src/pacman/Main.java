@@ -26,6 +26,7 @@ public class Main extends Application {
 
         theScene.addEventHandler(KeyEvent.KEY_PRESSED, event -> gameManager.movePacman(event));
         theScene.addEventHandler(KeyEvent.KEY_RELEASED, event -> gameManager.stopPacman(event));
+        theScene.addEventHandler(KeyEvent.KEY_PRESSED, event -> gameManager.restartGame(event));
 
         theStage.show();
     }

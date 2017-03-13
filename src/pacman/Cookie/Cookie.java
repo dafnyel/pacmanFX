@@ -16,6 +16,10 @@ public class Cookie extends Circle {
         this.setFill(Color.SADDLEBROWN);
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public void hide() {
         this.setVisible(false);
     }
